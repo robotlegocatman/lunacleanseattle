@@ -153,7 +153,7 @@ function Index() {
                 home stays fresh.
               </p>
             </div>
-            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 {
                   icon: Droplets,
