@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Droplets, Sparkles, ShieldCheck, MapPin, Phone, Mail, CheckCircle2, Menu, X } from "lucide-react";
+import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 import logoAsset from "@/assets/luna-clean-logo.png.asset.json";
