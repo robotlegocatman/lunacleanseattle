@@ -168,6 +168,12 @@ function Index() {
                     "Sticky labels and leftover liquids don't stand a chance. We deodorize your recycling bins too.",
                 },
                 {
+                  icon: Leaf,
+                  title: "Compost Bin Cleaning",
+                  description:
+                    "Food scraps and organic waste leave stubborn buildup. We deep-clean compost bins to stop smells and pests.",
+                },
+                {
                   icon: ShieldCheck,
                   title: "Monthly Maintenance",
                   description:
@@ -187,6 +193,33 @@ function Index() {
                   <p className="mt-3 text-muted-foreground">{service.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* No Bin Too Dirty */}
+        <section className="bg-navy px-4 py-16 text-navy-foreground sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              No bin is too dirty for us.
+            </h2>
+            <p className="mt-4 text-lg text-navy-foreground/80">
+              Grimy, sticky, or years overdue — we clean them all. If your bins are too dirty to handle,
+              leave it to Luna Clean. We scrub, sanitize, and deodorize every bin, no matter the condition.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm font-medium text-navy-foreground/90">
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-lime" />
+                No judgment
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-lime" />
+                No extra hassle
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-lime" />
+                No bin turned away
+              </span>
             </div>
           </div>
         </section>
