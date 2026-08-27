@@ -292,7 +292,7 @@ function Index() {
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2">
               <a
-                href="tel:+12065551234"
+                href="tel:+17149123682"
                 className="flex items-center gap-4 rounded-2xl border border-border bg-background p-6 transition-colors hover:bg-accent"
               >
                 <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -300,11 +300,11 @@ function Index() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Call or text</p>
-                  <p className="text-lg font-semibold text-foreground">(206) 555-1234</p>
+                  <p className="text-lg font-semibold text-foreground">(714) 912-3682</p>
                 </div>
               </a>
               <a
-                href="mailto:hello@lunacleanseattle.com"
+                href="mailto:lunacleanseattle@moderncentral.net"
                 className="flex items-center gap-4 rounded-2xl border border-border bg-background p-6 transition-colors hover:bg-accent"
               >
                 <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -312,14 +312,14 @@ function Index() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Email us</p>
-                  <p className="text-lg font-semibold text-foreground">hello@lunacleanseattle.com</p>
+                  <p className="text-lg font-semibold text-foreground">lunacleanseattle@moderncentral.net</p>
                 </div>
               </a>
             </div>
 
             <div className="mt-10 text-center">
               <Button asChild size="lg" className="bg-primary px-8 text-primary-foreground hover:bg-primary/90">
-                <a href="mailto:hello@lunacleanseattle.com">Request a Free Quote</a>
+                <a href="mailto:lunacleanseattle@moderncentral.net">Request a Free Quote</a>
               </Button>
               <p className="mt-3 text-sm text-muted-foreground">
                 No commitment required. We typically reply within one business day.
