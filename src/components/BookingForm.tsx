@@ -3,68 +3,89 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Loader2, CalendarCheck, Phone } from "lucide-react";
 
 /**
- * Google Forms wiring
- * -------------------
- * 1. Create a Google Form with one question per field below.
- * 2. In Google Forms: three-dot menu → "Get pre-filled link" → fill each field → copy the link.
- * 3. The link looks like:
- *    https://docs.google.com/forms/d/e/<FORM_ID>/viewform?usp=pp_url&entry.111111111=Name&entry.222222222=Phone...
- * 4. Paste <FORM_ID> into GOOGLE_FORM_ID and each entry.XXXXXXXXX number into FIELD_IDS.
+ * Google Forms wiring for "Luna Clean — Booking Request"
+ * Field IDs read from the form's pre-filled link.
  */
-const GOOGLE_FORM_ID = "PASTE_YOUR_GOOGLE_FORM_ID_HERE";
+const GOOGLE_FORM_ID = "1FAIpQLSc-k2aTgvMh8YIRwP96Ce3NVqzvMYyEGyQM7x3uZOgYMRVjuw";
 const FIELD_IDS = {
-  name: "entry.000000001",
-  phone: "entry.000000002",
-  email: "entry.000000003",
-  address: "entry.000000004",
-  binTypes: "entry.000000005",
-  binCount: "entry.000000006",
-  preferredTime: "entry.000000007",
-  frequency: "entry.000000008",
-  accessInstructions: "entry.000000009",
-  photoPermission: "entry.000000010",
-  notes: "entry.000000011",
+  name: "entry.883419355",
+  address: "entry.1319302915",
+  phone: "entry.1545097604",
+  binCount: "entry.924065852",
+  binTypes: "entry.1398284407",
+  timeWindow: "entry.167946491",
+  binLocation: "entry.635595180",
+  photoPermission: "entry.1850185537",
 };
 
 type FormState = {
   name: string;
-  phone: string;
-  email: string;
   address: string;
-  binTypes: string[];
+  phone: string;
   binCount: string;
-  preferredTime: string;
-  frequency: string;
-  accessInstructions: string;
-  photoPermission: boolean;
-  notes: string;
+  binTypes: string[];
+  timeWindow: string;
+  binLocation: string;
+  binLocationOther: string;
+  photoPermission: string;
 };
 
 const initialForm: FormState = {
   name: "",
-  phone: "",
-  email: "",
   address: "",
-  binTypes: [],
+  phone: "",
   binCount: "1",
-  preferredTime: "",
-  frequency: "one-time",
-  accessInstructions: "",
-  photoPermission: false,
-  notes: "",
+  binTypes: [],
+  timeWindow: "Anytime",
+  binLocation: "Curbside",
+  binLocationOther: "",
+  photoPermission: "No",
 };
 
-const binTypeOptions = ["Trash", "Recycling", "Compost"];
-const frequencyOptions = [
-  { value: "one-time", label: "One-time clean" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
-];
+// These strings must match the Google Form options exactly.
+const binCountOptions = ["1", "2", "3+"];
+const binTypeOptions = ["Garbage bin(s)", "Recycling bin", "Yard waste/food waste"];
+const timeWindowOptions = ["Morning", "Afternoon", "Anytime"];
+const binLocationOptions = ["Curbside", "Side of house", "Backyard"];
+const photoOptions = ["Yes", "No"];
 
 const inputClass =
   "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20";
 const labelClass = "mb-1.5 block text-sm font-medium text-foreground";
 const errorClass = "mt-1 text-sm text-red-600";
+
+function PillGroup({
+  options,
+  selected,
+  onToggle,
+}: {
+  options: string[];
+  selected: string[];
+  onToggle: (value: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt) => {
+        const active = selected.includes(opt);
+        return (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => onToggle(opt)}
+            aria-pressed={active}
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              active
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-background text-foreground hover:bg-accent"
+            }`}
+          >
+            {opt}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export function BookingForm() {
   const [form, setForm] = useState<FormState>(initialForm);
@@ -85,15 +106,20 @@ export function BookingForm() {
     );
   };
 
+  const selectLocation = (loc: string) => {
+    setForm((f) => ({ ...f, binLocation: loc, binLocationOther: loc === "Other" ? f.binLocationOther : "" }));
+    setErrors((e) => ({ ...e, binLocation: undefined, binLocationOther: undefined }));
+  };
+
   const validate = (): boolean => {
     const next: Partial<Record<keyof FormState, string>> = {};
     if (!form.name.trim()) next.name = "Please enter your name";
+    if (!form.address.trim()) next.address = "Please enter your street address";
     if (!form.phone.trim()) next.phone = "Please enter your phone number";
     else if (!/^[\d\s()+-]{7,}$/.test(form.phone.trim())) next.phone = "Please enter a valid phone number";
-    if (form.email.trim() && !/^\S+@\S+\.\S+$/.test(form.email.trim()))
-      next.email = "Please enter a valid email address";
-    if (!form.address.trim()) next.address = "Please enter your service address";
-    if (form.binTypes.length === 0) next.binTypes = "Select at least one bin type";
+    if (form.binTypes.length === 0) next.binTypes = "Select at least one bin";
+    if (form.binLocation === "Other" && !form.binLocationOther.trim())
+      next.binLocationOther = "Please tell us where the bins will be";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -105,16 +131,18 @@ export function BookingForm() {
 
     const body = new URLSearchParams();
     body.append(FIELD_IDS.name, form.name.trim());
-    body.append(FIELD_IDS.phone, form.phone.trim());
-    body.append(FIELD_IDS.email, form.email.trim());
     body.append(FIELD_IDS.address, form.address.trim());
-    body.append(FIELD_IDS.binTypes, form.binTypes.join(", "));
+    body.append(FIELD_IDS.phone, form.phone.trim());
     body.append(FIELD_IDS.binCount, form.binCount);
-    body.append(FIELD_IDS.preferredTime, form.preferredTime.trim());
-    body.append(FIELD_IDS.frequency, form.frequency);
-    body.append(FIELD_IDS.accessInstructions, form.accessInstructions.trim());
-    body.append(FIELD_IDS.photoPermission, form.photoPermission ? "Yes" : "No");
-    body.append(FIELD_IDS.notes, form.notes.trim());
+    for (const type of form.binTypes) body.append(FIELD_IDS.binTypes, type);
+    body.append(FIELD_IDS.timeWindow, form.timeWindow);
+    if (form.binLocation === "Other") {
+      body.append(FIELD_IDS.binLocation, "__other_option__");
+      body.append(`${FIELD_IDS.binLocation}.other_option_response`, form.binLocationOther.trim());
+    } else {
+      body.append(FIELD_IDS.binLocation, form.binLocation);
+    }
+    body.append(FIELD_IDS.photoPermission, form.photoPermission);
 
     try {
       // Google Forms accepts cross-origin POSTs; no-cors returns an opaque response on success.
@@ -166,7 +194,7 @@ export function BookingForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="bk-name" className={labelClass}>
-            Full name <span className="text-red-600">*</span>
+            Name <span className="text-red-600">*</span>
           </label>
           <input
             id="bk-name"
@@ -181,7 +209,7 @@ export function BookingForm() {
         </div>
         <div>
           <label htmlFor="bk-phone" className={labelClass}>
-            Phone number <span className="text-red-600">*</span>
+            Best phone number for scheduling <span className="text-red-600">*</span>
           </label>
           <input
             id="bk-phone"
@@ -194,30 +222,16 @@ export function BookingForm() {
           />
           {errors.phone && <p className={errorClass}>{errors.phone}</p>}
         </div>
-        <div>
-          <label htmlFor="bk-email" className={labelClass}>
-            Email <span className="text-muted-foreground font-normal">(optional)</span>
-          </label>
-          <input
-            id="bk-email"
-            type="email"
-            className={inputClass}
-            placeholder="you@example.com"
-            value={form.email}
-            onChange={(e) => set("email", e.target.value)}
-            maxLength={255}
-          />
-          {errors.email && <p className={errorClass}>{errors.email}</p>}
-        </div>
-        <div>
+        <div className="sm:col-span-2">
           <label htmlFor="bk-address" className={labelClass}>
-            Service address <span className="text-red-600">*</span>
+            Street address <span className="text-red-600">*</span>{" "}
+            <span className="text-muted-foreground font-normal">(house number and street name — Maple Leaf area only)</span>
           </label>
           <input
             id="bk-address"
             type="text"
             className={inputClass}
-            placeholder="Street address in Maple Leaf"
+            placeholder="1234 NE 88th St"
             value={form.address}
             onChange={(e) => set("address", e.target.value)}
             maxLength={200}
@@ -226,138 +240,72 @@ export function BookingForm() {
         </div>
       </div>
 
-      {/* Bin types + count */}
+      {/* Bins */}
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
           <span className={labelClass}>
-            Which bins should we clean? <span className="text-red-600">*</span>
+            Which bins do you want cleaned? <span className="text-red-600">*</span>
           </span>
-          <div className="flex flex-wrap gap-2">
-            {binTypeOptions.map((type) => {
-              const active = form.binTypes.includes(type);
-              return (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => toggleBinType(type)}
-                  aria-pressed={active}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-background text-foreground hover:bg-accent"
-                  }`}
-                >
-                  {type}
-                </button>
-              );
-            })}
-          </div>
+          <PillGroup options={binTypeOptions} selected={form.binTypes} onToggle={toggleBinType} />
           {errors.binTypes && <p className={errorClass}>{errors.binTypes}</p>}
         </div>
         <div>
-          <label htmlFor="bk-bincount" className={labelClass}>
-            How many bins?
-          </label>
-          <select
-            id="bk-bincount"
-            className={inputClass}
-            value={form.binCount}
-            onChange={(e) => set("binCount", e.target.value)}
-          >
-            {["1", "2", "3", "4", "5+"].map((n) => (
-              <option key={n} value={n}>
-                {n} {n === "1" ? "bin" : "bins"}
-              </option>
-            ))}
-          </select>
+          <span className={labelClass}>How many bins would you like cleaned?</span>
+          <PillGroup
+            options={binCountOptions}
+            selected={[form.binCount]}
+            onToggle={(v) => set("binCount", v)}
+          />
         </div>
       </div>
 
-      {/* Schedule + frequency */}
+      {/* Schedule + location */}
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="bk-time" className={labelClass}>
-            Preferred date &amp; time window
-          </label>
-          <input
-            id="bk-time"
-            type="text"
-            className={inputClass}
-            placeholder="e.g. Saturday morning, or any weekday after 3pm"
-            value={form.preferredTime}
-            onChange={(e) => set("preferredTime", e.target.value)}
-            maxLength={200}
+          <span className={labelClass}>Preferred time window</span>
+          <PillGroup
+            options={timeWindowOptions}
+            selected={[form.timeWindow]}
+            onToggle={(v) => set("timeWindow", v)}
           />
         </div>
         <div>
-          <span className={labelClass}>How often?</span>
-          <div className="flex flex-wrap gap-2">
-            {frequencyOptions.map((opt) => {
-              const active = form.frequency === opt.value;
-              return (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => set("frequency", opt.value)}
-                  aria-pressed={active}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-background text-foreground hover:bg-accent"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
+          <span className={labelClass}>Where will your bins be located on cleaning day?</span>
+          <PillGroup
+            options={[...binLocationOptions, "Other"]}
+            selected={[form.binLocation]}
+            onToggle={selectLocation}
+          />
+          {form.binLocation === "Other" && (
+            <>
+              <input
+                type="text"
+                className={`${inputClass} mt-3`}
+                placeholder="Tell us where the bins will be"
+                value={form.binLocationOther}
+                onChange={(e) => set("binLocationOther", e.target.value)}
+                maxLength={200}
+              />
+              {errors.binLocationOther && <p className={errorClass}>{errors.binLocationOther}</p>}
+            </>
+          )}
         </div>
       </div>
 
-      {/* Access instructions */}
-      <div className="mt-6">
-        <label htmlFor="bk-access" className={labelClass}>
-          Where will your bins be on cleaning day?
-        </label>
-        <textarea
-          id="bk-access"
-          className={`${inputClass} min-h-[80px] resize-y`}
-          placeholder="e.g. Curbside by the driveway, side gate unlocked, alley behind the garage..."
-          value={form.accessInstructions}
-          onChange={(e) => set("accessInstructions", e.target.value)}
-          maxLength={1000}
-        />
-      </div>
-
-      {/* Notes */}
-      <div className="mt-6">
-        <label htmlFor="bk-notes" className={labelClass}>
-          Anything else we should know? <span className="text-muted-foreground font-normal">(optional)</span>
-        </label>
-        <textarea
-          id="bk-notes"
-          className={`${inputClass} min-h-[80px] resize-y`}
-          placeholder="Gate codes, pets, extra-stinky situations..."
-          value={form.notes}
-          onChange={(e) => set("notes", e.target.value)}
-          maxLength={1000}
-        />
-      </div>
-
       {/* Photo permission */}
-      <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-background p-4">
-        <input
-          type="checkbox"
-          className="mt-0.5 h-5 w-5 rounded border-border accent-primary"
-          checked={form.photoPermission}
-          onChange={(e) => set("photoPermission", e.target.checked)}
-        />
-        <span className="text-sm text-foreground">
-          <span className="font-medium">Before &amp; after photos:</span> It's OK for Luna Clean to
-          post photos of my sparkling bins on Facebook and social media. No address or personal
-          info shown.
+      <div className="mt-6">
+        <span className={labelClass}>
+          Permission to post before/after photos on our Facebook page &amp; social media?
         </span>
-      </label>
+        <PillGroup
+          options={photoOptions}
+          selected={[form.photoPermission]}
+          onToggle={(v) => set("photoPermission", v)}
+        />
+        <p className="mt-2 text-sm text-muted-foreground">
+          Photos show your sparkling bins only — never your address or personal info.
+        </p>
+      </div>
 
       {status === "error" && (
         <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
