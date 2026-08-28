@@ -312,6 +312,24 @@ function Index() {
           </div>
         </section>
 
+        {/* Book a Cleaning */}
+        <section id="book" className="bg-navy px-4 py-20 text-navy-foreground sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                Book a cleaning
+              </h2>
+              <p className="mt-4 text-lg text-navy-foreground/80">
+                Tell us about your bins and we'll confirm your appointment within 24 hours.
+                No contracts, no hassle.
+              </p>
+            </div>
+            <div className="mx-auto mt-12 max-w-3xl">
+              <BookingForm />
+            </div>
+          </div>
+        </section>
+
         {/* Contact / CTA */}
         <section id="contact" className="bg-hero-gradient px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl rounded-3xl bg-card p-8 shadow-xl ring-1 ring-border sm:p-12 lg:p-16">
