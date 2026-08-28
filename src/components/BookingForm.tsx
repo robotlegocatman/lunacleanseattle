@@ -175,7 +175,7 @@ export function BookingForm() {
         </p>
         <Button
           variant="outline"
-          className="mt-6 border-navy/20"
+          className="mt-6 border-navy/20 text-foreground hover:bg-accent hover:text-accent-foreground"
           onClick={() => setStatus("idle")}
         >
           Book another cleaning
