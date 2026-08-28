@@ -89,7 +89,7 @@ function PillGroup({
 
 export function BookingForm() {
   const [form, setForm] = useState<FormState>(initialForm);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string | undefined>>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) => {
