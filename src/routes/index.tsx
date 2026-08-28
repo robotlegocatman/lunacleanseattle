@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { BookingForm } from "@/components/BookingForm";
 
 import logoAsset from "@/assets/luna-clean-logo.png.asset.json";
 
@@ -23,6 +24,7 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Service Area", href: "#service-area" },
+  { label: "Book Now", href: "#book" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -56,7 +58,7 @@ function Index() {
               </a>
             ))}
             <Button asChild className="ml-4 bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="#contact">Get a Quote</a>
+              <a href="#book">Get a Quote</a>
             </Button>
           </nav>
 
@@ -83,7 +85,7 @@ function Index() {
                 </a>
               ))}
               <Button asChild className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Get a Quote</a>
+                <a href="#book" onClick={() => setMobileMenuOpen(false)}>Get a Quote</a>
               </Button>
             </nav>
           </div>
@@ -111,7 +113,7 @@ function Index() {
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                    <a href="#contact">Get Your Bins Cleaned</a>
+                    <a href="#book">Get Your Bins Cleaned</a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-navy/20 text-foreground hover:bg-accent hover:text-accent-foreground">
                     <a href="#services">See Our Services</a>
