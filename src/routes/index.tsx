@@ -38,7 +38,7 @@ function Index() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
             <img
-              src={logoUrl.url}
+              src={logoUrl}
               alt="Luna Clean logo"
               className="h-14 w-auto"
             />
@@ -133,7 +133,7 @@ function Index() {
               <div className="relative mx-auto w-full max-w-md lg:max-w-full">
                 <div className="relative rounded-3xl bg-card p-8 shadow-xl ring-1 ring-border">
                   <img
-                    src={logoUrl.url}
+                    src={logoUrl}
                     alt="Luna Clean mascot spraying water on a trash bin"
                     className="mx-auto w-full max-w-sm rounded-2xl"
                   />
@@ -389,7 +389,7 @@ function Index() {
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex items-center gap-3">
               <img
-                src={logoUrl.url}
+                src={logoUrl}
                 alt="Luna Clean logo"
                 className="h-10 w-auto"
               />
