@@ -4,13 +4,13 @@ import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle
 import { useState } from "react";
 import { BookingForm } from "@/components/BookingForm";
 
-import logoAsset from "@/assets/luna-clean-logo.png.asset.json";
+import logoUrl from "/luna-clean-logo.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Luna Clean | Trash Bin Cleaning in Maple Leaf, Seattle" },
+      { title: "Luna Clean | Maple Leaf" },
       { name: "description", content: "Professional trash bin cleaning service in Maple Leaf, Seattle. We scrub, sanitize, and deodorize your garbage bins so you don't have to." },
       { property: "og:title", content: "Luna Clean | Trash Bin Cleaning in Maple Leaf, Seattle" },
       { property: "og:description", content: "Professional trash bin cleaning service in Maple Leaf, Seattle. We scrub, sanitize, and deodorize your garbage bins so you don't have to." },
@@ -38,7 +38,7 @@ function Index() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
             <img
-              src={logoAsset.url}
+              src={logoUrl.url}
               alt="Luna Clean logo"
               className="h-14 w-auto"
             />
@@ -58,7 +58,7 @@ function Index() {
               </a>
             ))}
             <Button asChild className="ml-4 bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="#book">Get a Quote</a>
+              <a href="#book">Book Now</a>
             </Button>
           </nav>
 
@@ -85,7 +85,7 @@ function Index() {
                 </a>
               ))}
               <Button asChild className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                <a href="#book" onClick={() => setMobileMenuOpen(false)}>Get a Quote</a>
+                <a href="#book" onClick={() => setMobileMenuOpen(false)}>Book Now</a>
               </Button>
             </nav>
           </div>
@@ -133,7 +133,7 @@ function Index() {
               <div className="relative mx-auto w-full max-w-md lg:max-w-full">
                 <div className="relative rounded-3xl bg-card p-8 shadow-xl ring-1 ring-border">
                   <img
-                    src={logoAsset.url}
+                    src={logoUrl.url}
                     alt="Luna Clean mascot spraying water on a trash bin"
                     className="mx-auto w-full max-w-sm rounded-2xl"
                   />
@@ -321,7 +321,8 @@ function Index() {
               </h2>
               <p className="mt-4 text-lg text-navy-foreground/80">
                 Tell us about your bins and we'll confirm your appointment within 24 hours.
-                No contracts, no hassle.
+                No contracts, no hassle. Make sure your bins aren't filled with trash
+                before the chosen cleaning appointment.
               </p>
             </div>
             <div className="mx-auto mt-12 max-w-3xl">
@@ -388,7 +389,7 @@ function Index() {
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex items-center gap-3">
               <img
-                src={logoAsset.url}
+                src={logoUrl.url}
                 alt="Luna Clean logo"
                 className="h-10 w-auto"
               />
