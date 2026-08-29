@@ -28,6 +28,7 @@ export const Route = createFileRoute("/")({
 });
 
 const navLinks = [
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
@@ -153,6 +154,142 @@ function Index() {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About the Owners */}
+        <section id="about" className="px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <div className="text-center">
+              <span className="text-3xl">🗑️</span>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Meet the Owners
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                Hi. We're the Kids Who Clean Your Trash Cans.
+              </p>
+              <p className="mt-2 text-lg leading-8 text-muted-foreground">Yep. You read that right.</p>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                We're Dylan (10) and Elliot (13), two brothers, and the owners of Luna Clean.
+              </p>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                We started Luna Clean because we wanted to make some money, learn how to run a
+                business, and—let's be honest—we thought cleaning garbage cans would be pretty
+                funny.
+              </p>
+              <p className="mt-6 text-lg font-semibold text-foreground">
+                Turns out… garbage cans are REALLY dirty.
+              </p>
+              <p className="mt-2 text-lg leading-8 text-muted-foreground">
+                But somebody's gotta do it!
+              </p>
+            </div>
+
+            <div className="mt-14 grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-card-foreground">Meet Dylan</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Age: 10 · Job Title: Head of Getting Dirty
+                </p>
+                <p className="mt-4 text-muted-foreground">
+                  Dylan is the youngest member of the Luna Clean team and has approximately zero
+                  fear of disgusting garbage cans.
+                </p>
+                <p className="mt-4 text-sm font-medium text-card-foreground">His special skills include:</p>
+                <ul className="mt-3 space-y-2">
+                  {[
+                    "Finding the grossest bin on the street",
+                    "Getting dirty without complaining… usually",
+                    "Asking how much money we're making",
+                    "Saying, \"Ewww!\" while continuing to clean",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-lime" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  <span className="font-medium text-card-foreground">Favorite part:</span> Making a
+                  disgusting bin look brand new.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  <span className="font-medium text-card-foreground">Least favorite part:</span>{" "}
+                  Smelling a disgusting bin before making it look brand new.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-card-foreground">Meet Elliot</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Age: 13 · Job Title: Big Brother / Boss / Professional Eye-Roller
+                </p>
+                <p className="mt-4 text-muted-foreground">
+                  Elliot handles a lot of the business side of Luna Clean and helps make sure we
+                  actually know what we're doing.
+                </p>
+                <p className="mt-4 text-sm font-medium text-card-foreground">His special skills include:</p>
+                <ul className="mt-3 space-y-2">
+                  {[
+                    "Keeping track of jobs",
+                    "Helping with the business stuff",
+                    "Coming up with ideas",
+                    "Making sure Dylan doesn't spend all the money",
+                    "Being a big brother… whether Dylan asked for one or not",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-lime" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  <span className="font-medium text-card-foreground">Favorite part:</span> Watching
+                  the business grow.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  <span className="font-medium text-card-foreground">Least favorite part:</span>{" "}
+                  Working with his little brother.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-14 rounded-2xl bg-navy px-6 py-10 text-navy-foreground sm:px-10">
+              <h3 className="text-2xl font-bold">🗑️ How Did This Happen?</h3>
+              <p className="mt-4 text-navy-foreground/80">One day we thought:</p>
+              <p className="mt-2 font-medium">"People hate cleaning their garbage cans."</p>
+              <p className="mt-4 text-navy-foreground/80">Then we thought:</p>
+              <p className="mt-2 font-medium">"We hate cleaning our garbage cans too."</p>
+              <p className="mt-4 text-navy-foreground/80">Then we thought:</p>
+              <p className="mt-2 font-medium">
+                "Wait… what if we cleaned OTHER people's garbage cans and got paid for it?"
+              </p>
+              <p className="mt-6 text-xl font-black text-lime">LUNA CLEAN WAS BORN.</p>
+              <p className="mt-6 text-navy-foreground/80">
+                Now we're learning how to run a real business, work with customers, manage money,
+                show up on time, and do a job we're proud of.
+              </p>
+              <p className="mt-4 text-navy-foreground/80">And yes, we're still brothers.</p>
+              <p className="mt-2 text-navy-foreground/80">So there may occasionally be some arguing.</p>
+              <p className="mt-2 text-navy-foreground/80">
+                But we promise we won't argue inside your garbage can.
+              </p>
+            </div>
+
+            <div className="mt-14 text-center">
+              <h3 className="text-2xl font-bold text-foreground">Thanks for Supporting Luna Clean!</h3>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Every time someone books us, we're learning something new and getting one step
+                closer to building something that's completely ours.
+              </p>
+              <p className="mt-4 text-lg text-muted-foreground">
+                So thanks for supporting two young entrepreneurs—and for letting us take care of
+                the stinky stuff.
+              </p>
+              <p className="mt-8 text-lg font-semibold text-foreground">Dylan & Elliot</p>
+              <p className="text-muted-foreground">The Luna Clean Crew</p>
+              <p className="mt-6 text-xl font-bold text-lime">We clean it. You don't have to.</p>
             </div>
           </div>
         </section>
