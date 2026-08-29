@@ -47,12 +47,23 @@ function table(data: BookingPayload) {
     .join("")}</table>`;
 }
 
-async function sendEmail(opts: { apiKey: string; from: string; to: string; replyTo?: string | undefined; subject: string; html: string }) {
-  const res = await fetch("https://api.resend.com/emails", {
+const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
+
+async function sendEmail(opts: {
+  lovableKey: string;
+  resendKey: string;
+  from: string;
+  to: string;
+  replyTo?: string | undefined;
+  subject: string;
+  html: string;
+}) {
+  const res = await fetch(`${GATEWAY_URL}/emails`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${opts.apiKey}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${opts.lovableKey}`,
+      "X-Connection-Api-Key": opts.resendKey,
     },
     body: JSON.stringify({
       from: opts.from,
@@ -64,21 +75,23 @@ async function sendEmail(opts: { apiKey: string; from: string; to: string; reply
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Email send failed (${res.status}): ${text}`);
+    console.error(`Resend gateway request failed [${res.status}]: ${text}`);
+    throw new Error(`Email send failed [${res.status}]: ${text}`);
   }
 }
 
-
 export async function deliverBookingEmails(data: BookingPayload) {
-  const apiKey = process.env["RESEND_API_KEY"];
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY not configured — skipping booking emails");
+  const resendKey = process.env["RESEND_API_KEY"];
+  const lovableKey = process.env["LOVABLE_API_KEY"];
+  if (!resendKey || !lovableKey) {
+    console.warn("Email credentials not configured — skipping booking emails");
     return { sent: false as const };
   }
   const from = process.env["BOOKING_FROM_EMAIL"] || "Luna Clean <onboarding@resend.dev>";
 
   await sendEmail({
-    apiKey,
+    lovableKey,
+    resendKey,
     from,
     to: OWNER_EMAIL,
     replyTo: data.email || undefined,
@@ -88,7 +101,8 @@ export async function deliverBookingEmails(data: BookingPayload) {
 
   if (data.email) {
     await sendEmail({
-      apiKey,
+      lovableKey,
+    resendKey,
       from,
       to: data.email,
       replyTo: OWNER_EMAIL,
