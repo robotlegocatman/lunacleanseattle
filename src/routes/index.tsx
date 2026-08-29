@@ -4,7 +4,7 @@ import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle
 import { useState } from "react";
 import { BookingForm } from "@/components/BookingForm";
 
-import logoUrl from "/luna-clean-logo.png";
+import logoUrl from "/luna-clean-logo.png"; // Just pointing to the /public folder root, that's it.
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -255,7 +255,7 @@ function Index() {
                   step: "03",
                   title: "Enjoy clean bins",
                   description:
-                    "We scrub, rinse, sanitize, and deodorize — then take all the dirty water with us.",
+                    "We scrub, rinse, sanitize, and deodorize. Add a Febreze add-on to enjoy longer lasting scent!",
                 },
               ].map((item) => (
                 <div key={item.step} className="relative rounded-2xl bg-navy-foreground/10 p-8 backdrop-blur">
