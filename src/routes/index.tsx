@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X, Trash2 } from "lucide-react";
+import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X, Trash2, CreditCard, Wallet, Banknote, HandCoins } from "lucide-react";
 import { useState } from "react";
 import { BookingForm } from "@/components/BookingForm";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -31,6 +31,7 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
+  { label: "Payment", href: "#payment" },
   { label: "FAQ", href: "#faq" },
   { label: "Service Area", href: "#service-area" },
   { label: "Book Now", href: "#book" },
@@ -326,6 +327,63 @@ function Index() {
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Ask about recurring monthly service and Febreze scent add-ons.
+            </p>
+          </div>
+        </section>
+
+        {/* Payment */}
+        <section id="payment" className="bg-navy px-4 py-20 text-navy-foreground sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                Easy, flexible payment
+              </h2>
+              <p className="mt-4 text-lg text-navy-foreground/80">
+                We process card payments securely through Square, and we're happy to work with
+                whatever's easiest for you.
+              </p>
+            </div>
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  icon: CreditCard,
+                  title: "All major cards",
+                  description:
+                    "We accept Visa, Mastercard, American Express, Discover, and more — processed securely through Square.",
+                },
+                {
+                  icon: Wallet,
+                  title: "Venmo, PayPal & Zelle",
+                  description:
+                    "Prefer a quick digital transfer? We accept Venmo, PayPal, and Zelle too.",
+                },
+                {
+                  icon: Banknote,
+                  title: "Cash",
+                  description:
+                    "Old-fashioned cash works just fine — pay your technician directly at the time of service.",
+                },
+                {
+                  icon: HandCoins,
+                  title: "Tips welcome",
+                  description:
+                    "If our team went above and beyond, tips are always appreciated (and never expected).",
+                },
+              ].map((method) => (
+                <div
+                  key={method.title}
+                  className="rounded-2xl bg-navy-foreground/10 p-6 backdrop-blur"
+                >
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-lime/10 text-lime">
+                    <method.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold">{method.title}</h3>
+                  <p className="mt-2 text-sm text-navy-foreground/80">{method.description}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-10 text-center text-sm text-navy-foreground/70">
+              Payment is due at the time of service unless other arrangements have been made.
             </p>
           </div>
         </section>
