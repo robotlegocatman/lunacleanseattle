@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Loader2, CalendarCheck, Phone } from "lucide-react";
+import { sendBookingEmails } from "@/lib/booking-email.functions";
 
 /**
  * Google Forms wiring for "Luna Clean — Booking Request"
@@ -22,6 +23,7 @@ type FormState = {
   name: string;
   address: string;
   phone: string;
+  email: string;
   binCount: string;
   binTypes: string[];
   timeWindow: string;
@@ -34,6 +36,7 @@ const initialForm: FormState = {
   name: "",
   address: "",
   phone: "",
+  email: "",
   binCount: "1",
   binTypes: [],
   timeWindow: "Anytime",
@@ -117,6 +120,8 @@ export function BookingForm() {
     if (!form.address.trim()) next.address = "Please enter your street address";
     if (!form.phone.trim()) next.phone = "Please enter your phone number";
     else if (!/^[\d\s()+-]{7,}$/.test(form.phone.trim())) next.phone = "Please enter a valid phone number";
+    if (form.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim()))
+      next.email = "Please enter a valid email address";
     if (form.binTypes.length === 0) next.binTypes = "Select at least one bin";
     if (form.binLocation === "Other" && !form.binLocationOther.trim())
       next.binLocationOther = "Please tell us where the bins will be";
@@ -152,6 +157,25 @@ export function BookingForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
       });
+      try {
+        await sendBookingEmails({
+          data: {
+            name: form.name.trim(),
+            address: form.address.trim(),
+            phone: form.phone.trim(),
+            email: form.email.trim(),
+            binCount: form.binCount,
+            binTypes: form.binTypes,
+            timeWindow: form.timeWindow,
+            binLocation:
+              form.binLocation === "Other" ? form.binLocationOther.trim() : form.binLocation,
+            photoPermission: form.photoPermission,
+          },
+        });
+      } catch (err) {
+        // Booking already reached Google Forms; email notification is best-effort.
+        console.error("Booking confirmation email failed", err);
+      }
       setStatus("success");
       setForm(initialForm);
     } catch {
@@ -221,6 +245,22 @@ export function BookingForm() {
             maxLength={20}
           />
           {errors.phone && <p className={errorClass}>{errors.phone}</p>}
+        </div>
+        <div className="sm:col-span-2">
+          <label htmlFor="bk-email" className={labelClass}>
+            Email address{" "}
+            <span className="font-normal text-muted-foreground">(optional — we'll send you a confirmation)</span>
+          </label>
+          <input
+            id="bk-email"
+            type="email"
+            className={inputClass}
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={(e) => set("email", e.target.value)}
+            maxLength={200}
+          />
+          {errors.email && <p className={errorClass}>{errors.email}</p>}
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="bk-address" className={labelClass}>
