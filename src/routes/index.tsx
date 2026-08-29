@@ -225,15 +225,15 @@ function Index() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm font-medium text-navy-foreground/90">
               <span className="inline-flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-lime" />
-                No judgment
+                No judgment.
               </span>
               <span className="inline-flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-lime" />
-                No extra hassle
+                No extra hassle.
               </span>
               <span className="inline-flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-lime" />
-                No bin turned away
+                No bin turned away.
               </span>
             </div>
           </div>
@@ -262,7 +262,7 @@ function Index() {
                   step: "02",
                   title: "We come to you",
                   description:
-                    "Our team arrives with professional equipment and eco-friendly cleaning solutions.",
+                    "We arrive with powerful equipment and eco-friendly cleaning solutions.",
                 },
                 {
                   step: "03",
@@ -347,7 +347,7 @@ function Index() {
                 {
                   question: "Do I need to be home for my cleaning?",
                   answer:
-                    "Nope! As long as your bins are accessible (e.g. curbside or in an easily reachable spot), our team can clean them without you being present.",
+                    "Yes! We'll need to discuss what will happen and confirm the cleaning process with you. If you're not available, we can schedule a time that works for you. Payment is after the cleaning, so make sure be present, and have your payment method ready.",
                 },
                 {
                   question: "Do you clean bins that still have trash in them?",
@@ -367,7 +367,7 @@ function Index() {
                 {
                   question: "What products do you use?",
                   answer:
-                    "We use eco-friendly, biodegradable cleaning solutions that are tough on grime and odors but safe for your family, pets, and the environment.",
+                    "We use the least amount of Simple Green necessary to get all grease off. Then, we use Dr. Bronner's Tea Tree Castile Soap to wash everything. Then, we'll use Method Lavender to deodorize. All of these are safe for the environment.",
                 },
                 {
                   question: "Do you offer contracts?",
@@ -397,7 +397,7 @@ function Index() {
                   Proudly serving Maple Leaf, Seattle
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
-                  We're your neighbors. Luna Clean is based right here in Maple Leaf and focused on
+                  We're basically your neighbors. Luna Clean is based right here in Maple Leaf and focused on
                   keeping Seattle homes cleaner, one bin at a time.
                 </p>
                 <ul className="mt-8 space-y-4">
