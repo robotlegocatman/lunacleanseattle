@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X } from "lucide-react";
+import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle2, Menu, X, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { BookingForm } from "@/components/BookingForm";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 import logoUrl from "/luna-clean-logo.png"; // Just pointing to the /public folder root, that's it.
 
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/")({
 const navLinks = [
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Service Area", href: "#service-area" },
   { label: "Book Now", href: "#book" },
   { label: "Contact", href: "#contact" },
@@ -57,18 +59,22 @@ function Index() {
                 {link.label}
               </a>
             ))}
-            <Button asChild className="ml-4 bg-primary text-primary-foreground hover:bg-primary/90">
+            <ThemeToggle className="ml-3" />
+            <Button asChild className="ml-3 bg-primary text-primary-foreground hover:bg-primary/90">
               <a href="#book">Book Now</a>
             </Button>
           </nav>
 
+          <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
+          </div>
         </div>
 
         {mobileMenuOpen && (
@@ -268,6 +274,55 @@ function Index() {
           </div>
         </section>
 
+        {/* Pricing */}
+        <section id="pricing" className="px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Simple, flat pricing
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                No contracts, no hidden fees. Pay per cleaning based on how many bins you have.
+              </p>
+            </div>
+            <div className="mt-14 grid gap-8 md:grid-cols-3">
+              {[
+                { bins: "1 Bin", price: "15", blurb: "Perfect for a single garbage, recycling, or compost bin." },
+                { bins: "2 Bins", price: "20", blurb: "Our most popular option — pick any two of your bins.", featured: true },
+                { bins: "3+ Bins", price: "30", blurb: "All your bins cleaned in one visit. Best value." },
+              ].map((tier) => (
+                <div
+                  key={tier.bins}
+                  className={`relative flex flex-col rounded-2xl border bg-card p-8 shadow-sm ${
+                    tier.featured ? "border-primary ring-2 ring-primary/30" : "border-border"
+                  }`}
+                >
+                  {tier.featured && (
+                    <span className="absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+                      Most popular
+                    </span>
+                  )}
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Trash2 className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-5 text-xl font-semibold text-card-foreground">{tier.bins}</h3>
+                  <p className="mt-3 flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-foreground">${tier.price}</span>
+                    <span className="text-sm text-muted-foreground">/ cleaning</span>
+                  </p>
+                  <p className="mt-3 flex-1 text-muted-foreground">{tier.blurb}</p>
+                  <Button asChild className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
+                    <a href="#book">Book {tier.bins}</a>
+                  </Button>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 text-center text-sm text-muted-foreground">
+              Ask about recurring monthly service and Febreze scent add-ons.
+            </p>
+          </div>
+        </section>
+
         {/* Service Area */}
         <section id="service-area" className="px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
@@ -333,7 +388,7 @@ function Index() {
 
         {/* Contact / CTA */}
         <section id="contact" className="bg-hero-gradient px-4 py-20 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl rounded-3xl bg-card p-8 shadow-xl ring-1 ring-border sm:p-12 lg:p-16">
+          <div className="mx-auto max-w-5xl rounded-3xl bg-card p-6 shadow-xl ring-1 ring-border sm:p-10 lg:p-14">
             <div className="text-center">
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Ready for fresher bins?
@@ -347,26 +402,28 @@ function Index() {
             <div className="mt-10 grid gap-6 sm:grid-cols-2">
               <a
                 href="tel:+17149123682"
-                className="flex items-center gap-4 rounded-2xl border border-border bg-background p-6 transition-colors hover:bg-accent"
+                className="flex min-w-0 items-center gap-4 rounded-2xl border border-border bg-background p-5 transition-colors hover:bg-accent sm:p-6"
               >
                 <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <Phone className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-medium text-muted-foreground">Call or text</p>
                   <p className="text-lg font-semibold text-foreground">(714) 912-3682</p>
                 </div>
               </a>
               <a
                 href="mailto:lunacleanseattle@moderncentral.net"
-                className="flex items-center gap-4 rounded-2xl border border-border bg-background p-6 transition-colors hover:bg-accent"
+                className="flex min-w-0 items-center gap-4 rounded-2xl border border-border bg-background p-5 transition-colors hover:bg-accent sm:p-6"
               >
                 <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <Mail className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-medium text-muted-foreground">Email us</p>
-                  <p className="text-lg font-semibold text-foreground">lunacleanseattle@moderncentral.net</p>
+                  <p className="break-all text-base font-semibold text-foreground sm:text-lg">
+                    lunacleanseattle@moderncentral.net
+                  </p>
                 </div>
               </a>
             </div>
