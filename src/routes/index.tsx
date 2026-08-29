@@ -4,6 +4,12 @@ import { Droplets, Sparkles, ShieldCheck, Leaf, MapPin, Phone, Mail, CheckCircle
 import { useState } from "react";
 import { BookingForm } from "@/components/BookingForm";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import logoUrl from "/luna-clean-logo.png"; // Just pointing to the /public folder root, that's it.
 
@@ -25,6 +31,7 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
+  { label: "FAQ", href: "#faq" },
   { label: "Service Area", href: "#service-area" },
   { label: "Book Now", href: "#book" },
   { label: "Contact", href: "#contact" },
@@ -320,6 +327,64 @@ function Index() {
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Ask about recurring monthly service and Febreze scent add-ons.
             </p>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Frequently asked questions
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Got a question? We've got answers. Reach out if you don't see what you're
+                looking for.
+              </p>
+            </div>
+            <Accordion type="single" collapsible className="mt-10 rounded-2xl border border-border bg-card px-6 shadow-sm sm:px-8">
+              {[
+                {
+                  question: "Do I need to be home for my cleaning?",
+                  answer:
+                    "Nope! As long as your bins are accessible (e.g. curbside or in an easily reachable spot), our team can clean them without you being present.",
+                },
+                {
+                  question: "Do you clean bins that still have trash in them?",
+                  answer:
+                    "For the best results, we ask that your bins be empty before your scheduled cleaning. We can still clean bins with minor debris, but we're not able to remove trash for you.",
+                },
+                {
+                  question: "What if I need to reschedule or miss my cleaning day?",
+                  answer:
+                    "No problem — just reach out by phone, text, or email as soon as you can and we'll find a new time that works for you. There are no cancellation fees.",
+                },
+                {
+                  question: "How often should I get my bins cleaned?",
+                  answer:
+                    "Most customers go with our monthly maintenance plan to keep bins consistently fresh, but one-time deep cleans are great for move-ins, spring cleaning, or a bin that's overdue for some love.",
+                },
+                {
+                  question: "What products do you use?",
+                  answer:
+                    "We use eco-friendly, biodegradable cleaning solutions that are tough on grime and odors but safe for your family, pets, and the environment.",
+                },
+                {
+                  question: "Do you offer contracts?",
+                  answer:
+                    "No contracts, ever. Book a one-time cleaning or recurring service and cancel or adjust anytime.",
+                },
+              ].map((faq) => (
+                <AccordionItem key={faq.question} value={faq.question}>
+                  <AccordionTrigger className="text-base font-semibold text-card-foreground">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </section>
 
