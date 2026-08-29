@@ -17,7 +17,7 @@ export type BookingPayload = z.infer<typeof bookingSchema>;
 
 const OWNER_EMAIL = "lunacleanseattle@moderncentral.net";
 
-function rows(data: BookingPayload) {
+function rows(data: BookingPayload): Array<[string, string]> {
   return [
     ["Name", data.name],
     ["Phone", data.phone],
@@ -42,13 +42,13 @@ function escapeHtml(value: string) {
 function table(data: BookingPayload) {
   return `<table style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">${rows(data)
     .map(
-      ([label, value]) =>
+      ([label, value]: [string, string]) =>
         `<tr><td style="padding:6px 14px 6px 0;color:#64748b">${escapeHtml(label)}</td><td style="padding:6px 0;font-weight:600;color:#0f172a">${escapeHtml(value)}</td></tr>`
     )
     .join("")}</table>`;
 }
 
-async function sendEmail(opts: { apiKey: string; from: string; to: string; replyTo?: string; subject: string; html: string }) {
+async function sendEmail(opts: { apiKey: string; from: string; to: string; replyTo?: string | undefined; subject: string; html: string }) {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
