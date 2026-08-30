@@ -90,10 +90,16 @@ function PillGroup({
   );
 }
 
-export function BookingForm() {
+export function BookingForm({ binPreset }: { binPreset?: { value: string; n: number } | null }) {
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string | undefined>>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  useEffect(() => {
+    if (!binPreset) return;
+    setStatus("idle");
+    setForm((f) => ({ ...f, binCount: binPreset.value }));
+  }, [binPreset]);
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((f) => ({ ...f, [key]: value }));
