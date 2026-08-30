@@ -41,6 +41,7 @@ const navLinks = [
 
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [binPreset, setBinPreset] = useState<{ value: string; n: number } | null>(null);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
