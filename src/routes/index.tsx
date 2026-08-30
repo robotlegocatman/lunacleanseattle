@@ -649,7 +649,7 @@ function Index() {
               </p>
             </div>
             <div className="mx-auto mt-12 max-w-3xl">
-              <BookingForm />
+              <BookingForm binPreset={binPreset} />
             </div>
           </div>
         </section>
