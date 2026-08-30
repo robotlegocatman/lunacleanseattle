@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Loader2, CalendarCheck, Phone } from "lucide-react";
 import { sendBookingEmails } from "@/lib/booking-email.functions";
