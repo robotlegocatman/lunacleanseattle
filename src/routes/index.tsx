@@ -41,6 +41,7 @@ const navLinks = [
 
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [binPreset, setBinPreset] = useState<{ value: string; n: number } | null>(null);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -432,9 +433,9 @@ function Index() {
             </div>
             <div className="mt-14 grid gap-8 md:grid-cols-3">
               {[
-                { bins: "1 Bin", price: "15", blurb: "Perfect for a single garbage, recycling, or compost bin." },
-                { bins: "2 Bins", price: "20", blurb: "Our most popular option — pick any two of your bins.", featured: true },
-                { bins: "3+ Bins", price: "30", blurb: "All your bins cleaned in one visit. Best value." },
+                { bins: "1 Bin", count: "1", price: "15", blurb: "Perfect for a single garbage, recycling, or compost bin." },
+                { bins: "2 Bins", count: "2", price: "20", blurb: "Our most popular option — pick any two of your bins.", featured: true },
+                { bins: "3+ Bins", count: "3+", price: "30", blurb: "All your bins cleaned in one visit. Best value." },
               ].map((tier) => (
                 <div
                   key={tier.bins}
@@ -457,7 +458,14 @@ function Index() {
                   </p>
                   <p className="mt-3 flex-1 text-muted-foreground">{tier.blurb}</p>
                   <Button asChild className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
-                    <a href="#book">Book {tier.bins}</a>
+                    <a
+                      href="#book"
+                      onClick={() =>
+                        setBinPreset((p) => ({ value: tier.count, n: (p?.n ?? 0) + 1 }))
+                      }
+                    >
+                      Book {tier.bins}
+                    </a>
                   </Button>
                 </div>
               ))}
@@ -641,7 +649,7 @@ function Index() {
               </p>
             </div>
             <div className="mx-auto mt-12 max-w-3xl">
-              <BookingForm />
+              <BookingForm binPreset={binPreset} />
             </div>
           </div>
         </section>
