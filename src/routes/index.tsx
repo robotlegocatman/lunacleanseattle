@@ -457,7 +457,14 @@ function Index() {
                   </p>
                   <p className="mt-3 flex-1 text-muted-foreground">{tier.blurb}</p>
                   <Button asChild className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
-                    <a href="#book">Book {tier.bins}</a>
+                    <a
+                      href="#book"
+                      onClick={() =>
+                        setBinPreset((p) => ({ value: tier.count, n: (p?.n ?? 0) + 1 }))
+                      }
+                    >
+                      Book {tier.bins}
+                    </a>
                   </Button>
                 </div>
               ))}
