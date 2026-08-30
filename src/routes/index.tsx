@@ -432,9 +432,9 @@ function Index() {
             </div>
             <div className="mt-14 grid gap-8 md:grid-cols-3">
               {[
-                { bins: "1 Bin", price: "15", blurb: "Perfect for a single garbage, recycling, or compost bin." },
-                { bins: "2 Bins", price: "20", blurb: "Our most popular option — pick any two of your bins.", featured: true },
-                { bins: "3+ Bins", price: "30", blurb: "All your bins cleaned in one visit. Best value." },
+                { bins: "1 Bin", count: "1", price: "15", blurb: "Perfect for a single garbage, recycling, or compost bin." },
+                { bins: "2 Bins", count: "2", price: "20", blurb: "Our most popular option — pick any two of your bins.", featured: true },
+                { bins: "3+ Bins", count: "3+", price: "30", blurb: "All your bins cleaned in one visit. Best value." },
               ].map((tier) => (
                 <div
                   key={tier.bins}
